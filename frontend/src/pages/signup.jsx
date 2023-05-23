@@ -7,6 +7,7 @@ const SignupPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [role, setRole] = useState(''); // New state for user's role
   const [error, setError] = useState('');
 
   const handleUsernameChange = (e) => {
@@ -19,6 +20,10 @@ const SignupPage = () => {
 
   const handleConfirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
+  };
+
+  const handleRoleChange = (e) => {
+    setRole(e.target.value);
   };
 
   const handleSubmit = async (e) => {
@@ -34,6 +39,7 @@ const SignupPage = () => {
       const response = await axios.post('/api/signup', {
         username,
         password,
+        role, // Include the role in the signup request
       });
 
       // Handle the successful signup response
@@ -68,7 +74,7 @@ const SignupPage = () => {
           <h2 className="text-3xl text-white font-bold mb-4">Sign up</h2>
           <div className="mb-4">
             <label htmlFor="username" className="block text-white">
-              Username:
+              Username
             </label>
             <input
               type="text"
@@ -81,7 +87,7 @@ const SignupPage = () => {
           </div>
           <div className="mb-4">
             <label htmlFor="password" className="block text-white">
-              Password:
+              Password
             </label>
             <input
               type="password"
@@ -94,7 +100,7 @@ const SignupPage = () => {
           </div>
           <div className="mb-4">
             <label htmlFor="confirmPassword" className="block text-white">
-              Confirm Password:
+              Confirm Password
             </label>
             <input
               type="password"
@@ -104,6 +110,21 @@ const SignupPage = () => {
               placeholder='Confirm Password'
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-400 "
             />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="role" className="block text-white">
+              Role
+            </label>
+            <select
+              id="role"
+              value={role}
+              onChange={handleRoleChange}
+              className="w-full pr-16 pl-4 py-2 text-left border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+            >
+              <option value="student">Student</option>
+              <option value="admin">Admin</option>
+              <option value="club-head">Club Head</option>
+            </select>
           </div>
           {error && <div className="text-red-500 mb-4">{error}</div>}
           <button

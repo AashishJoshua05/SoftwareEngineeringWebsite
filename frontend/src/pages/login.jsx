@@ -65,7 +65,7 @@ const LoginPage = () => {
         <h2 className="text-3xl text-white font-bold mb-4">Log in</h2>
         <div className="mb-4">
           <label htmlFor="username" className="block text-white">
-            Username:
+            Username
           </label>
           <input
             type="text"
