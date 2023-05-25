@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import axios from 'axios';
 import { FaGoogle } from "react-icons/fa";
 import { AiOutlineMail } from "react-icons/ai";
+import { AuthContext } from '../components/AuthContext';
 
 const LoginPage = () => {
+  const { loggedIn } = useContext(AuthContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -19,22 +21,25 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-
     try {
-      const response = await axios.post('/api/login', {
+      const response = await axios.post('http://localhost:5000/api/login', {
         username,
         password,
       });
+      const {token, user} = response.data;
 
       // Store the token in local storage or cookies
-      const token = response.data.token;
+      // const token = response.data.token;
       localStorage.setItem('token', token);
+      console.log(user);
+      window.location.href = '/'
 
       // Redirect the user to the dashboard or homepage
       // Replace '/dashboard' with the desired route
-      window.location.href = '/dashboard';
+      // window.location.href = '/dashboard';
     } catch (error) {
-      setError(error.response.data.error);
+      console.error(error.response.data);
+      // setError(error.response.data.error);
     }
   };
 
@@ -112,10 +117,10 @@ const LoginPage = () => {
               <FaGoogle size={20} />
               {/* <span>Login with Google</span> */}
             </button>
-            <button
+             <button
               onClick={handleOutlookLogin}
               className="flex-grow justify-center bg-zinc-800 hover:bg-blue-600 text-white py-2 px-4 rounded-md flex items-center space-x-2"
-            >
+            > 
               <AiOutlineMail size={20} />
               {/* <span>Login with Outlook</span> */}
             </button>

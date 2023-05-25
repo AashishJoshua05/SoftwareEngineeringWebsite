@@ -6,16 +6,16 @@ import Navbar from "../components/navbar";
 
 
 
-const ProfilePage = () => {
+const ClubPage = (props) => {
+    // const { loggedIn } = props.location.state;
 
     return (
         <div>
             <Navbar />
-            {/* <Calender /> */}
             {/* <Footer /> */}
         </div>
     )
 }
 
 
-export default ProfilePage;
+export default ClubPage;

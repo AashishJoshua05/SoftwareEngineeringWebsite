@@ -1,43 +1,94 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { Link } from "react-router-dom";
+const placeHolder = "Image Link";
 
-const placeholderlink = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4OyLQHtk0Sw7Ox7h1evH619BPIRL-FzNQAQ&usqp=CAU"
+const Navbar = () => {
+  const [toggleNav, setToggleNav] = useState(false);
+  const loggedIn = localStorage.getItem('token');
+  const handleNavToggle = () => {
+    setToggleNav(!toggleNav);
+  };
 
-const Navbar = ({ loggedIn }) => {
+  const handleLogin = () => {
+    // Redirect to login page
+    window.location.href = "/login";
+  };
+
+  const handleProfileClick = () => {
+    // Redirect to profile page
+    window.location.href = "/profile";
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setToggleNav(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
-    <nav className="flex items-center justify-between bg-gray-800 text-white py-2 px-8">
-      <div className="flex items-center">
-        {/* Logo */}
-        <img src={placeholderlink} alt="Logo" className="h-10 w-1/2 rounded-md" />
-        <span className="ml-2 text-base font-bold">Event Manager</span>
+    <>
+      <div className="flex w-full items-center justify-between border-b-white border-b-2 p-4 bg-[#13161d] h-12 text-white">
+        <span className="text-3xl font-bold">Logo</span>
+        <span onClick={handleNavToggle} className="flex md:hidden text-2xl">
+          <GiHamburgerMenu />
+        </span>
+        <div className="hidden md:flex items-center justify-end space-x-2">
+          <ul className="flex items-center justify-end space-x-6 px-4">
+            <Link to='/'>Home</Link>
+            <Link to='/clubs'>Clubs</Link>
+            <Link to='/About'>Profile</Link>
+          </ul>
+          {loggedIn ? (
+            <button className="pl-4" onClick={handleProfileClick}>
+              <img
+                src={placeHolder}
+                alt="Profile"
+                className="h-12 rounded-full"
+              />
+            </button>
+          ) : (
+            <button className="pl-4 py-1 px-4 rounded-md bg-gray-800 text-white hover:bg-gray-700 transition-colors" 
+            onClick={handleLogin}>
+              Log in
+            </button>
+          )}
+        </div>
       </div>
-      <div className="flex items-center">
-        {/* Menu Items */}
-        <ul className="flex space-x-4">
-          <li>
-            <a href="#" className="text-white hover:text-gray-300">Home</a>
-          </li>
-          <li>
-            <a href="#" className="text-white hover:text-gray-300">About</a>
-          </li>
-          <li>
-            <a href="#" className="text-white hover:text-gray-300">Services</a>
-          </li>
-          <li>
-            <a href="#" className="text-white hover:text-gray-300">Contact</a>
-          </li>
-        </ul>
-        {/* Profile Image */}
-        {loggedIn ? (
-          <a href="#" className="ml-4 flex items-center">
-            <img src={placeholderlink} alt="Profile" className="h-8 w-8 rounded-full" />
-          </a>
-        ) : (
-          <button className="ml-4 bg-gray-600 text-white rounded-md py-2 px-4 hover:bg-gray-700">
-            Log in
-          </button>
-        )}
-      </div>
-    </nav>
+      {toggleNav ? (
+        <div className="bg-[#13161D] text-white shadow-md p-4 ease-out duration-300 transform translate-y-0 opacity-100">
+          <ul className="flex flex-col items-start justify-center gap-4">
+            <Link to='/'>Home</Link>
+            <Link to='/clubs'>Clubs</Link>
+            <Link to='/About'>Profile</Link>
+          </ul>
+          <div className="flex items-center justify-start space-x-4 mt-4">
+            {loggedIn ? (
+              <button className="pl-4" onClick={handleProfileClick}>
+                <img
+                  src={placeHolder}
+                  alt="Profile"
+                  className="h-12 rounded-full"
+                />
+              </button>
+            ) : (
+              <button className="pl-4 py-2 px-4 rounded-md bg-gray-800 text-white hover:bg-gray-700 transition-colors" 
+              onClick={handleLogin}>
+                Log in
+              </button>
+            )}
+          </div>
+        </div>
+      ) : null}
+    </>
   );
 };
 
