@@ -1,11 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, {  useState } from 'react';
 import axios from 'axios';
-import { FaGoogle } from "react-icons/fa";
-import { AiOutlineMail } from "react-icons/ai";
-import { AuthContext } from '../components/AuthContext';
 
 const LoginPage = () => {
-  const { loggedIn } = useContext(AuthContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -28,40 +24,16 @@ const LoginPage = () => {
       });
       const {token, user} = response.data;
 
-      // Store the token in local storage or cookies
-      // const token = response.data.token;
       localStorage.setItem('token', token);
       console.log(user);
       window.location.href = '/'
 
-      // Redirect the user to the dashboard or homepage
-      // Replace '/dashboard' with the desired route
-      // window.location.href = '/dashboard';
     } catch (error) {
       console.error(error.response.data);
-      // setError(error.response.data.error);
+      setError(error.response.data.error);
     }
   };
 
-  const handleGoogleLogin = () => {
-    // Perform Google login logic
-  };
-
-  const handleOutlookLogin = () => {
-    // Perform Outlook login logic
-  };
-
-  const handleSignUp = () => {
-    // Redirect the user to the sign-up page
-    // Replace '/signup' with the desired sign-up route
-    window.location.href = '/signup';
-  };
-
-  const handleForgotPassword = () => {
-    // Redirect the user to the forgot password page
-    // Replace '/forgot-password' with the desired forgot password route
-    window.location.href = '/forgot-password';
-  };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-800" style={{backgroundImage: 'url("https://images.unsplash.com/photo-1519705129143-43afdfe43ac7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1937&q=80")', backgroundSize: 'cover', overflow: 'hidden'}}>
@@ -93,14 +65,6 @@ const LoginPage = () => {
             placeholder='Password'
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-400 "
           />
-            <p>
-            <button
-                onClick={handleForgotPassword}
-                className="text-white hover:underline focus:outline-none"
-            >
-                Forgot password?
-            </button>
-            </p>
         </div>
         {error && <div className="text-red-500 mb-4">{error}</div>}
         <button
@@ -109,33 +73,6 @@ const LoginPage = () => {
         >
           Login
         </button>
-        <div className="flex">
-            <button
-              onClick={handleGoogleLogin}
-              className="flex-grow justify-center bg-zinc-800 hover:bg-red-600 text-white py-2 px-4 rounded-md flex items-center mr-4"
-            >
-              <FaGoogle size={20} />
-              {/* <span>Login with Google</span> */}
-            </button>
-             <button
-              onClick={handleOutlookLogin}
-              className="flex-grow justify-center bg-zinc-800 hover:bg-blue-600 text-white py-2 px-4 rounded-md flex items-center space-x-2"
-            > 
-              <AiOutlineMail size={20} />
-              {/* <span>Login with Outlook</span> */}
-            </button>
-        </div>
-        <div className="mt-4">
-            <p className='text-gray-500'>
-            Don't have an account?{' '}
-            <button
-                onClick={handleSignUp}
-                className="text-white hover:underline focus:outline-none"
-            >
-                Sign up
-            </button>
-            </p>
-        </div>
       </form>
       </div>
     </div>

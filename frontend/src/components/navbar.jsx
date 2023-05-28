@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link } from "react-router-dom";
-const placeHolder = "Image Link";
 
 const Navbar = () => {
   const [toggleNav, setToggleNav] = useState(false);
@@ -15,9 +14,9 @@ const Navbar = () => {
     window.location.href = "/login";
   };
 
-  const handleProfileClick = () => {
-    // Redirect to profile page
-    window.location.href = "/profile";
+  const handleSignOut = () => {
+    window.location.href = '/'
+    localStorage.removeItem('token')
   };
 
   useEffect(() => {
@@ -44,16 +43,11 @@ const Navbar = () => {
         <div className="hidden md:flex items-center justify-end space-x-2">
           <ul className="flex items-center justify-end space-x-6 px-4">
             <Link to='/'>Home</Link>
-            <Link to='/clubs'>Clubs</Link>
-            <Link to='/About'>Profile</Link>
+            {loggedIn && <Link to='/clubs'>Clubs</Link>}
           </ul>
           {loggedIn ? (
-            <button className="pl-4" onClick={handleProfileClick}>
-              <img
-                src={placeHolder}
-                alt="Profile"
-                className="h-12 rounded-full"
-              />
+            <button className="pl-4 py-2 px-4 rounded-md bg-gray-800 text-white hover:bg-gray-700 transition-colors" onClick={handleSignOut}>
+              Sign Out
             </button>
           ) : (
             <button className="pl-4 py-1 px-4 rounded-md bg-gray-800 text-white hover:bg-gray-700 transition-colors" 
@@ -67,17 +61,13 @@ const Navbar = () => {
         <div className="bg-[#13161D] text-white shadow-md p-4 ease-out duration-300 transform translate-y-0 opacity-100">
           <ul className="flex flex-col items-start justify-center gap-4">
             <Link to='/'>Home</Link>
-            <Link to='/clubs'>Clubs</Link>
-            <Link to='/About'>Profile</Link>
+            {loggedIn && <Link to='/clubs'>Clubs</Link>}
           </ul>
           <div className="flex items-center justify-start space-x-4 mt-4">
             {loggedIn ? (
-              <button className="pl-4" onClick={handleProfileClick}>
-                <img
-                  src={placeHolder}
-                  alt="Profile"
-                  className="h-12 rounded-full"
-                />
+              <button className="pl-4 py-2 px-4 rounded-md bg-gray-800 text-white hover:bg-gray-700 transition-colors" 
+              onClick={handleSignOut}>
+                Sign Out
               </button>
             ) : (
               <button className="pl-4 py-2 px-4 rounded-md bg-gray-800 text-white hover:bg-gray-700 transition-colors" 
