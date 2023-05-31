@@ -20,9 +20,7 @@ def login():
     # Fetch user from MongoDB collection
     user = collection_users.find_one({'username': username})
     if user and user['password'] == password:
-        token = "LoggedInDamnThatsCrazy05"
         response = {
-            'token': token,
             'user': {
                 'id': str(user['_id']),  # Convert ObjectId to string
                 'username': user['username'],
