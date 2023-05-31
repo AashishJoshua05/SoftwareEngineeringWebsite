@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from pymongo import MongoClient
+from bson import ObjectId
 
 app = Flask(__name__)
 CORS(app)
@@ -60,6 +61,37 @@ def events():
         else:
             response = {'message': 'Failed to add event'}
             return jsonify(response), 500
+
+
+@app.route('/api/clubs', methods=['GET'])
+def get_clubs():
+    clubs = list(collection_clubs.find({}, {'_id': False}))
+    return jsonify(clubs)
+
+
+@app.route('/api/clubs/<clubId>', methods=['PUT'])
+def update_club_budget(clubId):
+    try:
+        budget = int(request.json['budget'])
+        collection_clubs.update_one({'_id': ObjectId(clubId)}, {'$set': {'budget': budget}})
+        return {'message': 'Budget updated successfully'}
+    except Exception as e:
+        return {'error': str(e)}, 500
+
+# Route to update the club's budget
+@app.route('/api/clubs/updateBudget/<clubId>', methods=['PUT'])
+def update_budget(clubId):
+    try:
+        club = collection_clubs.find_one({"_id": ObjectId(clubId)})
+        if club:
+            updated_budget = int(request.json['budget'])
+            collection_clubs.update_one({"_id": ObjectId(clubId)}, {"$set": {"budget": updated_budget}})
+            return jsonify({"message": "Budget updated successfully"})
+        else:
+            return jsonify({"message": "Club not found"})
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+    
 
 if __name__ == '__main__':
     app.run()

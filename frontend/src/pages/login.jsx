@@ -39,7 +39,7 @@ const LoginPage = () => {
 
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-800" style={{backgroundImage: 'url("https://images.unsplash.com/photo-1519705129143-43afdfe43ac7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1937&q=80")', backgroundSize: 'cover', overflow: 'hidden'}}>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-neutral-800 " style={{backgroundImage: 'url("https://images.unsplash.com/photo-1519705129143-43afdfe43ac7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1937&q=80")', backgroundSize: 'cover', overflow: 'hidden'}}>
       <div class="rounded-xl bg-gray-800 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
       <form onSubmit={handleSubmit} className="rounded-lg  mb-4">
         <h2 className="text-3xl text-white font-bold mb-4">Log in</h2>
@@ -52,7 +52,7 @@ const LoginPage = () => {
             id="username"
             value={username}
             onChange={handleUsernameChange}
-            placeholder='Email Address'
+            placeholder='Username'
             className="w-full pr-16 pl-4 py-2 text-left border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
