@@ -20,8 +20,8 @@ const ClubsList = () => {
   };
 
   return (
-    <div className="bg-gray-300 flex flex-row">
-      <h1 className="">Clubs</h1>
+    <div className="bg-[#061836] h-full pb-96 gap-4 flex "
+    style={{backgroundImage: 'url("https://images.unsplash.com/photo-1519705129143-43afdfe43ac7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1937&q=80")', backgroundSize: 'cover', overflow: 'hidden'}}>
       {clubs.map((club) => (
         <ClubEvent club={club} key={club._id} />
       ))}
