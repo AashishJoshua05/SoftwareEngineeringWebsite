@@ -7,10 +7,10 @@ CORS(app)
 
 # Set up MongoDB connection
 client = MongoClient('mongodb://localhost:27017')
-db = client['EventManagementWebsite']
-collection_users = db['Users']
-collection_events = db['Events']
-collection_clubs = db['Clubs']
+db = client['EventManagementWebsite'] #Make a new Database Called EventManagementWebsite
+collection_users = db['Users'] #Make a new Collection called Users
+collection_events = db['Events'] #Make a new Collection called Events
+collection_clubs = db['Clubs'] #Make a new Collection called Clubs
 
 @app.route('/api/login', methods=['POST'])
 def login():
