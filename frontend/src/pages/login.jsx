@@ -25,6 +25,9 @@ const LoginPage = () => {
       const {token, user} = response.data;
 
       localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+      // console.log(token)
+      console.log("User Data Below\n")
       console.log(user);
       window.location.href = '/'
 
