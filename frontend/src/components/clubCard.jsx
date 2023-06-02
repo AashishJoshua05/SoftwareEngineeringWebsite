@@ -9,8 +9,9 @@ const ClubEvent = ({ club }) => {
     if (amount > 0 && amount <= club.budget) {
       try {
         const updatedBudget = club.budget - amount;
+        console.log(club.id);
         const response = await axios.put(
-          `http://localhost:5000/api/clubs/updateBudget/${club._id}`, // Update the URL to use club._id
+          `http://localhost:5000/api/clubs/updateBudget/${club.id}`, // Update the URL to use club._id
           { budget: updatedBudget }
         );
         console.log(response.data.message);
@@ -59,7 +60,7 @@ const ClubEvent = ({ club }) => {
                     id="subtractAmount"
                     value={subtractAmount}
                     onChange={(e) => setSubtractAmount(e.target.value)}
-                    className="w-24 h-8 px-2 rounded"
+                    className="w-24 h-8 px-2 rounded text-slate-900"
                   />
                   <button
                     onClick={handleSubtract}

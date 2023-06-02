@@ -3,9 +3,7 @@ import axios from "axios";
 import EventCard from "./eventCard";
 
 const EventCardHolder = () => {
-  const userData = localStorage.getItem("user");
-  const user = userData ? JSON.parse(userData) : null;
-  const loggedIn = !!user;
+  const loggedIn = localStorage.getItem('token');
   const [eventData, setEventData] = useState({
     date: "",
     time: "",
@@ -66,17 +64,23 @@ const EventCardHolder = () => {
 
   return (
     <div className="">
-      <h1>{console.log(loggedIn)}</h1>
-      <div className="bg-[#061836]  h-full pb-96 "
-      style={{backgroundImage: 'url("https://images.unsplash.com/photo-1519705129143-43afdfe43ac7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1937&q=80")', backgroundSize: 'cover', overflow: 'hidden'}}>
+      <div
+        className="bg-[#061836]  h-full pb-96 "
+        style={{
+          backgroundImage:
+            'url("https://images.unsplash.com/photo-1519705129143-43afdfe43ac7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1937&q=80")',
+          backgroundSize: "cover",
+          overflow: "hidden",
+        }}
+      >
         <EventCard events={events} />
       </div>
 
       {/* <h2>Add Event</h2> */}
       {errorMessage && <div className="error">{errorMessage}</div>}
-
+      { loggedIn ? (
       <form onSubmit={handleSubmit}>
-        <div  className="flex gap-4 pb-1 bg-[#1E293B] text-slate-100">
+        <div className="flex gap-4 pb-1 bg-[#1E293B] text-slate-100">
           <div>
             <label className="">Date:</label>
             <input
@@ -145,6 +149,7 @@ const EventCardHolder = () => {
           </button>
         </div>
       </form>
+      ) : (<div></div>)}
     </div>
   );
 };

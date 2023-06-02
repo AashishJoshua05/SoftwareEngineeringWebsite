@@ -68,27 +68,23 @@ def get_clubs():
     clubs = list(collection_clubs.find({}, {'_id': False}))
     return jsonify(clubs)
 
-
-@app.route('/api/clubs/<clubId>', methods=['PUT'])
-def update_club_budget(clubId):
+@app.route("/api/clubs/updateBudget/1", methods=["PUT"])
+def update_budget(club_id):
     try:
-        budget = int(request.json['budget'])
-        collection_clubs.update_one({'_id': ObjectId(clubId)}, {'$set': {'budget': budget}})
-        return {'message': 'Budget updated successfully'}
-    except Exception as e:
-        return {'error': str(e)}, 500
+        # Get the updated budget value from the request body
+        updated_budget = int(request.json["budget"])
 
-# Route to update the club's budget
-@app.route('/api/clubs/updateBudget/<clubId>', methods=['PUT'])
-def update_budget(clubId):
-    try:
-        club = collection_clubs.find_one({"_id": ObjectId(clubId)})
-        if club:
-            updated_budget = int(request.json['budget'])
-            collection_clubs.update_one({"_id": ObjectId(clubId)}, {"$set": {"budget": updated_budget}})
+        # Update the budget in the database
+        result = collection_clubs.update_one(
+            {"id": ObjectId(club_id)},
+            {"$set": {"budget": updated_budget}}
+        )
+
+        if result.modified_count > 0:
             return jsonify({"message": "Budget updated successfully"})
         else:
-            return jsonify({"message": "Club not found"})
+            return jsonify({"message": "Budget update failed"})
+
     except Exception as e:
         return jsonify({"message": str(e)}), 500
     
